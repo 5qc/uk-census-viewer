@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" href="/favicon.svg" />
+
+        <title>UK Census Viewer</title>
+
+        <link rel="stylesheet" href="/style.css" />
+        <script src="/script.js" defer></script>
+    </head>
+    <body>
+        <div class="navbar">
+            <div class="navbar-header">
+                <a href="/">UK Census Viewer</a>
+            </div>
+            <ul class="navbar-items">
+                <li>About</li>
+                <li><a href="/faq.html">FAQ</a></li>
+            </ul>
+        </div>
+
+        <div class="main">
+            <div class="postcode-search-container">
+                <input id="postcode-search" class="postcode-search" list="postcodes" placeholder="Search for a postcode sector in England or Wales" />
+                <button id="random-postcode">Random</button>
+            </div>
+
+            <div class="postcode-error" style="display: none;"></div>
+            <div class="postcode" style="display: none;">
+                <div class="postcode-name" id="postcode-name">420 420</div>
+                <table class="postcode-table">
+                    <tbody>
+                        <tr>
+                            <th>Population</th>
+                            <th></th>
+                        </tr>
+                        <tr>
+                            <td>Total</td>
+                            <td id="postcode-population__total">0</td>
+                        </tr>
+                        <tr>
+                            <td>Population density</td>
+                            <td id="postcode-population__density">0</td>
+                        </tr>
+                        <tr>
+                            <td>Males</td>
+                            <td id="postcode-population__males">0</td>
+                        </tr>
+                        <tr>
+                            <td>Females</td>
+                            <td id="postcode-population__females">0</td>
+                        </tr>
+                        <tr>
+                            <td>Living in households</td>
+                            <td id="postcode-population__in-households"></td>
+                        </tr>
+                        <tr>
+                            <td>Living in communal establishments</td>
+                            <td id="postcode-population__in-comm-est"></td>
+                        </tr>
+                        <tr>
+                            <td>Schoolchildren aged 4 and up</td>
+                            <td id="postcode-population__schoolchildren"></td>
+                        </tr>
+
+                        <tr>
+                            <th>Ethnic groups</th>
+                            <th></th>
+                        </tr>
+                        <tr>
+                            <td>White</td>
+                            <td id="postcode-eg__white"></td>
+                        </tr>
+                        <tr>
+                            <td tab-1>English/Welsh/Scottish/Northern Irish/British</td>
+                            <td id="postcode-eg__white-ewsnib"></td>
+                        </tr>
+                        <tr>
+                            <td tab-1>Irish</td>
+                            <td id="postcode-eg__white-irish"></td>
+                        </tr>
+                        <tr>
+                            <td tab-1>Gypsy or Irish Traveller</td>
+                            <td id="postcode-eg__white-gypsy-irish-traveller"></td>
+                        </tr>
+                        <tr>
+                            <td tab-1>Other</td>
+                            <td id="postcode-eg__white-other"></td>
+                        </tr>
+                        <tr>
+                            <td>Mixed/Multiple ethnic groups</td>
+                            <td id="postcode-eg__mixed"></td>
+                        </tr>
+                        <tr>
+                            <td tab-1>White and Black Caribbean</td>
+                            <td id="postcode-eg__mixed-white-black-caribbean"></td>
+                        </tr>
+                        <tr>
+                            <td tab-1>White and Black African</td>
+                            <td id="postcode-eg__mixed-white-black-african"></td>
+                        </tr>
+                        <tr>
+                            <td tab-1>White and Asian</td>
+                            <td id="postcode-eg__mixed-white-asian"></td>
+                        </tr>
+                        <tr>
+                            <td tab-1>Other Mixed</td>
+                            <td id="postcode-eg__mixed-other"></td>
+                        </tr>
+                        <tr>
+                            <td>Asian/Asian British</td>
+                            <td id="postcode-eg__asian"></td>
+                        </tr>
+                        <tr>
+                            <td tab-1>Indian</td>
+                            <td id="postcode-eg__asian-indian"></td>
+                        </tr>
+                        <tr>
+                            <td tab-1>Pakistani</td>
+                            <td id="postcode-eg__asian-pakistani"></td>
+                        </tr>
+                        <tr>
+                            <td tab-1>Bangladeshi</td>
+                            <td id="postcode-eg__asian-bangladeshi"></td>
+                        </tr>
+                        <tr>
+                            <td tab-1>Chinese</td>
+                            <td id="postcode-eg__asian-chinese"></td>
+                        </tr>
+                        <tr>
+                            <td tab-1>Other</td>
+                            <td id="postcode-eg__asian-other"></td>
+                        </tr>
+                        <tr>
+                            <td>Black/African/Caribbean/Black British</td>
+                            <td id="postcode-eg__black"></td>
+                        </tr>
+                        <tr>
+                            <td tab-1>African</td>
+                            <td id="postcode-eg__black-african"></td>
+                        </tr>
+                        <tr>
+                            <td tab-1>Caribbean</td>
+                            <td id="postcode-eg__black-caribbean"></td>
+                        </tr>
+                        <tr>
+                            <td tab-1>Other</td>
+                            <td id="postcode-eg__black-other"></td>
+                        </tr>
+                        <tr>
+                            <td>Arab</td>
+                            <td id="postcode-eg__arab"></td>
+                        </tr>
+                        <tr>
+                            <td>Other</td>
+                            <td id="postcode-eg__other"></td>
+                        </tr>
+
+                        <tr>
+                            <th>Geography</th>
+                            <th></th>
+                        </tr>
+                        <tr>
+                            <td>Area</td>
+                            <td id="postcode-area"></td>
+                        </tr>
+
+                        <tr>
+                            <th>Age of arrival</th>
+                            <th></th>
+                        </tr>
+                        <tr>
+                            <td>Born in the UK</td>
+                            <td id="postcode-aoa__born"></td>
+                        </tr>
+                        <tr>
+                            <td>0 to 4</td>
+                            <td id="postcode-aoa__0-4"></td>
+                        </tr>
+                        <tr>
+                            <td>5 to 7</td>
+                            <td id="postcode-aoa__5-7"></td>
+                        </tr>
+                        <tr>
+                            <td>8 to 9</td>
+                            <td id="postcode-aoa__8-9"></td>
+                        </tr>
+                        <tr>
+                            <td>10 to 14</td>
+                            <td id="postcode-aoa__10-14"></td>
+                        </tr>
+                        <tr>
+                            <td>15</td>
+                            <td id="postcode-aoa__15"></td>
+                        </tr>
+                        <tr>
+                            <td>16 to 17</td>
+                            <td id="postcode-aoa__16-17"></td>
+                        </tr>
+                        <tr>
+                            <td>18 to 19</td>
+                            <td id="postcode-aoa__18-19"></td>
+                        </tr>
+                        <tr>
+                            <td>20 to 24</td>
+                            <td id="postcode-aoa__20-24"></td>
+                        </tr>
+                        <tr>
+                            <td>25 to 29</td>
+                            <td id="postcode-aoa__25-29"></td>
+                        </tr>
+                        <tr>
+                            <td>30 to 44</td>
+                            <td id="postcode-aoa__30-44"></td>
+                        </tr>
+                        <tr>
+                            <td>45 to 59</td>
+                            <td id="postcode-aoa__45-59"></td>
+                        </tr>
+                        <tr>
+                            <td>60 to 64</td>
+                            <td id="postcode-aoa__60-64"></td>
+                        </tr>
+                        <tr>
+                            <td>65 to 74</td>
+                            <td id="postcode-aoa__65-74"></td>
+                        </tr>
+                        <tr>
+                            <td>75 to 84</td>
+                            <td id="postcode-aoa__75-84"></td>
+                        </tr>
+                        <tr>
+                            <td>85 to 89</td>
+                            <td id="postcode-aoa__85-89"></td>
+                        </tr>
+                        <tr>
+                            <td>90 and over</td>
+                            <td id="postcode-aoa__90-over"></td>
+                        </tr>
+
+                        <tr>
+                            <th>Country of Birth</th>
+                            <th></th>
+                        </tr>
+                        <tr>
+                            <td>Europe</td>
+                            <td id="postcode-cob__europe"></td>
+                        </tr>
+                        <tr>
+                            <td tab-1>United Kingdom</td>
+                            <td id="postcode-cob__uk"></td>
+                        </tr>
+                        <tr>
+                            <td tab-2>England</td>
+                            <td id="postcode-cob__england"></td>
+                        </tr>
+                        <tr>
+                            <td tab-2>Northern Ireland</td>
+                            <td id="postcode-cob__northern-ireland"></td>
+                        </tr>
+                        <tr>
+                            <td tab-2>Scotland</td>
+                            <td id="postcode-cob__scotland"></td>
+                        </tr>
+                        <tr>
+                            <td tab-2>Wales</td>
+                            <td id="postcode-cob__wales"></td>
+                        </tr>
+                        <tr>
+                            <td tab-2>Great Britian not otherwise specified</td>
+                            <td id="postcode-cob__ns-great-britian"></td>
+                        </tr>
+                        <tr>
+                            <td tab-2>United Kingdom not otherwise specified</td>
+                            <td id="postcode-cob__ns-united-kingdom"></td>
+                        </tr>
+                        <tr>
+                            <td tab-1>Channel Islands</td>
+                            <td id="postcode-cob__channel-islands"></td>
+                        </tr>
+                        <tr>
+                            <td tab-2>Guernsey</td>
+                            <td id="postcode-cob__guernsey"></td>
+                        </tr>
+                        <tr>
+                            <td tab-2>Jersey</td>
+                            <td id="postcode-cob__jersey"></td>
+                        </tr>
+                        <tr>
+                            <td tab-2>Channel Islands not otherwise specified</td>
+                            <td id="postcode-cob__ns-channel-islands"></td>
+                        </tr>
+                        <tr>
+                            <td tab-1>Isle of Man</td>
+                            <td id="postcode-cob__isle-of-man"></td>
+                        </tr>
+                        <tr>
+                            <td tab-1>Ireland</td>
+                            <td id="postcode-cob__ireland"></td>
+                        </tr>
+                        <tr>
+                            <td tab-1>Other</td>
+                            <td id="postcode-cob__other-europe"></td>
+                        </tr>
+                        <tr>
+                            <td tab-2>EU countries</td>
+                            <td id="postcode-cob__eu"></td>
+                        </tr>
+                        <tr>
+                            <td tab-3>France</td>
+                            <td id="postcode-cob__eu-france"></td>
+                        </tr>
+                        <tr>
+                            <td tab-3>Germany</td>
+                            <td id="postcode-cob__eu-germany"></td>
+                        </tr>
+                        <tr>
+                            <td tab-3>Italy</td>
+                            <td id="postcode-cob__eu-italy"></td>
+                        </tr>
+                        <tr>
+                            <td tab-3>Portugal</td>
+                            <td id="postcode-cob__eu-portugal"></td>
+                        </tr>
+                        <tr>
+                            <td tab-3>Spain (including Canary Islands)</td>
+                            <td id="postcode-cob__eu-spain"></td>
+                        </tr>
+                        <tr>
+                            <td tab-3>Other</td>
+                            <td id="postcode-cob__eu-other"></td>
+                        </tr>
+                        <tr>
+                            <td tab-2>EU Accession Countries (Apr 2001 - Mar 2011)</td>
+                            <td id="postcode-cob__eua"></td>
+                        </tr>
+                        <tr>
+                            <td tab-3>Lithuania</td>
+                            <td id="postcode-cob__eua-lithuania"></td>
+                        </tr>
+                        <tr>
+                            <td tab-3>Poland</td>
+                            <td id="postcode-cob__eua-poland"></td>
+                        </tr>
+                        <tr>
+                            <td tab-3>Romania</td>
+                            <td id="postcode-cob__eua-romania"></td>
+                        </tr>
+                        <tr>
+                            <td tab-3>Other</td>
+                            <td id="postcode-cob__eua-other"></td>
+                        </tr>
+                        <tr>
+                            <td tab-2>Rest of Europe</td>
+                            <td id="postcode-cob__europe-rest"></td>
+                        </tr>
+                        <tr>
+                            <td tab-3>Turkey</td>
+                            <td id="postcode-cob__europe-rest-turkey"></td>
+                        </tr>
+                        <tr>
+                            <td tab-3>Other</td>
+                            <td id="postcode-cob__europe-rest-other"></td>
+                        </tr>
+                        <tr>
+                            <td>Africa</td>
+                            <td id="postcode-cob__africa"></td>
+                        </tr>
+                        <tr>
+                            <td tab-1>Northern Africa</td>
+                            <td id="postcode-cob__africa-north"></td>
+                        </tr>
+                        <tr>
+                            <td tab-1>Central and Western Africa</td>
+                            <td id="postcode-cob__africa-central-western"></td>
+                        </tr>
+                        <tr>
+                            <td tab-2>Ghana</td>
+                            <td id="postcode-cob__africa-ghana"></td>
+                        </tr>
+                        <tr>
+                            <td tab-2>Nigeria</td>
+                            <td id="postcode-cob__africa-nigeria"></td>
+                        </tr>
+                        <tr>
+                            <td tab-2>Other</td>
+                            <td id="postcode-cob__africa-central-western-other"></td>
+                        </tr>
+                        <tr>
+                            <td tab-1>South and Eastern Africa</td>
+                            <td id="postcode-cob__africa-south-eastern"></td>
+                        </tr>
+                        <tr>
+                            <td tab-2>Kenya</td>
+                            <td id="postcode-cob__africa-kenya"></td>
+                        </tr>
+                        <tr>
+                            <td tab-2>Somalia</td>
+                            <td id="postcode-cob__africa-somalia"></td>
+                        </tr>
+                        <tr>
+                            <td tab-2>South Africa</td>
+                            <td id="postcode-cob__africa-south-africa"></td>
+                        </tr>
+                        <tr>
+                            <td tab-2>Zimbabwe</td>
+                            <td id="postcode-cob__africa-zimbabwe"></td>
+                        </tr>
+                        <tr>
+                            <td tab-2>Other</td>
+                            <td id="postcode-cob__africa-south-eastern-other"></td>
+                        </tr>
+                        <tr>
+                            <td tab-1>Africa not otherwise specified</td>
+                            <td id="postcode-cob__ns-africa"></td>
+                        </tr>
+
+                        <tr>
+                            <td>Middle East and Asia</td>
+                            <td id="postcode-cob__mea"></td>
+                        </tr>
+                        <tr>
+                            <td tab-1>Middle East</td>
+                            <td id="postcode-cob__mea-middle-east"></td>
+                        </tr>
+                        <tr>
+                            <td tab-2>Iran</td>
+                            <td id="postcode-cob__mea-iran"></td>
+                        </tr>
+                        <tr>
+                            <td tab-2>Other</td>
+                            <td id="postcode-cob__mea-middle-east-other"></td>
+                        </tr>
+                        <tr>
+                            <td tab-1>Asia</td>
+                            <td id="postcode-cob__mea-asia"></td>
+                        </tr>
+                        <tr>
+                            <td tab-2>Eastern Asia</td>
+                            <td id="postcode-cob__mea-eastern-asia"></td>
+                        </tr>
+                        <tr>
+                            <td tab-3>China</td>
+                            <td id="postcode-cob__mea-china"></td>
+                        </tr>
+                        <tr>
+                            <td tab-3>Hong Kong</td>
+                            <td id="postcode-cob__mea-hong-kong"></td>
+                        </tr>
+                        <tr>
+                            <td tab-3>Other</td>
+                            <td id="postcode-cob__mea-eastern-asia-other"></td>
+                        </tr>
+                        <tr>
+                            <td tab-2>Southern Asia</td>
+                            <td id="postcode-cob__mea-southern-asia"></td>
+                        </tr>
+                        <tr>
+                            <td tab-3>Bangladesh</td>
+                            <td id="postcode-cob__mea-bangladesh"></td>
+                        </tr>
+                        <tr>
+                            <td tab-3>India</td>
+                            <td id="postcode-cob__mea-india"></td>
+                        </tr>
+                        <tr>
+                            <td tab-3>Pakistan</td>
+                            <td id="postcode-cob__mea-pakistan"></td>
+                        </tr>
+                        <tr>
+                            <td tab-3>Sri Lanka</td>
+                            <td id="postcode-cob__mea-sri-lanka"></td>
+                        </tr>
+                        <tr>
+                            <td tab-3>Other</td>
+                            <td id="postcode-cob__mea-southern-asia-other"></td>
+                        </tr>
+                        <tr>
+                            <td tab-2>South-East Asia</td>
+                            <td id="postcode-cob__mea-south-east-asia"></td>
+                        </tr>
+                        <tr>
+                            <td tab-3>Philippines</td>
+                            <td id="postcode-cob__mea-philippines"></td>
+                        </tr>
+                        <tr>
+                            <td tab-3>Other</td>
+                            <td id="postcode-cob__mea-south-east-asia-other"></td>
+                        </tr>
+                        <tr>
+                            <td tab-2>Central Asia</td>
+                            <td id="postcode-cob__mea-central-asia"></td>
+                        </tr>
+
+                        <tr>
+                            <td>The Americans and the Caribbean</td>
+                            <td id="postcode-cob__ac"></td>
+                        </tr>
+                        <tr>
+                            <td tab-1>North America</td>
+                            <td id="postcode-cob__ac-north-america"></td>
+                        </tr>
+                        <tr>
+                            <td tab-2>United States</td>
+                            <td id="postcode-cob__ac-united-states"></td>
+                        </tr>
+                        <tr>
+                            <td tab-2>Other</td>
+                            <td id="postcode-cob__ac-north-america-other"></td>
+                        </tr>
+                        <tr>
+                            <td tab-1>Central America</td>
+                            <td id="postcode-cob__ac-central-america"></td>
+                        </tr>
+                        <tr>
+                            <td tab-1>South America</td>
+                            <td id="postcode-cob__ac-south-america"></td>
+                        </tr>
+                        <tr>
+                            <td tab-1>The Caribbean</td>
+                            <td id="postcode-cob__ac-caribbean"></td>
+                        </tr>
+                        <tr>
+                            <td tab-2>Jamaica</td>
+                            <td id="postcode-cob__ac-jamaica"></td>
+                        </tr>
+                        <tr>
+                            <td tab-2>Other</td>
+                            <td id="postcode-cob__ac-caribbean-other"></td>
+                        </tr>
+                        <tr>
+                            <td>Antarctica and Oceania</td>
+                            <td id="postcode-cob__ao"></td>
+                        </tr>
+                        <tr>
+                            <td tab-1>Antarctica</td>
+                            <td id="postcode-cob__ao-antarctica"></td>
+                        </tr>
+                        <tr>
+                            <td tab-1>Australasia</td>
+                            <td id="postcode-cob__ao-australasia"></td>
+                        </tr>
+                        <tr>
+                            <td tab-2>Australia</td>
+                            <td id="postcode-cob__ao-australia"></td>
+                        </tr>
+                        <tr>
+                            <td tab-2>Other</td>
+                            <td id="postcode-cob__ao-australasia-other"></td>
+                        </tr>
+                        <tr>
+                            <td tab-1>Other</td>
+                            <td id="postcode-cob__ao-oceania-other"></td>
+                        </tr>
+                        <tr>
+                            <td>Other</td>
+                            <td id="postcode-cob__other"></td>
+                        </tr>
+
+                        <tr>
+                            <th>Car or van availability</th>
+                            <th></th>
+                        </tr>
+                        <tr>
+                            <td>Amount of cars</td>
+                            <td id="postcode-cva__total"></td>
+                        </tr>
+                        <tr>
+                            <td tab-1>Households with no cars</td>
+                            <td id="postcode-cva__zero"></td>
+                        </tr>
+                        <tr>
+                            <td tab-1>Households with one car</td>
+                            <td id="postcode-cva__one"></td>
+                        </tr>
+                        <tr>
+                            <td tab-1>Households with two cars</td>
+                            <td id="postcode-cva__two"></td>
+                        </tr>
+                        <tr>
+                            <td tab-1>Households with three cars</td>
+                            <td id="postcode-cva__three"></td>
+                        </tr>
+                        <tr>
+                            <td tab-1>Households with four or more cars</td>
+                            <td id="postcode-cva__four-plus"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>
