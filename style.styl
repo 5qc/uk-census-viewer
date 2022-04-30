@@ -1,0 +1,132 @@
+// Import
+
+// Variables
+colors = {
+    main: #fff
+    secondary: #00247d
+    text: #000
+}
+fonts = {
+    main: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif"
+}
+
+// Mixins
+font()
+    font-family unquote(fonts.main)
+    font-size 100%
+
+// Styling
+body
+    background-color colors.main
+    color colors.text
+    margin 0
+    font-family unquote(fonts.main)
+input
+    font()
+    padding 6px
+    border-radius 5px
+    border none
+    background darken(colors.main, 10%)
+
+    &:focus
+        outline none
+button
+    font()
+    padding 6px
+    border-radius 5px
+    border none
+    background darken(colors.main, 10%)
+    cursor pointer
+    transition .2s background
+
+    &:hover
+        background darken(colors.main, 5%)
+        transition .2s background
+    &:active
+        background darken(colors.main, 15%)
+        transition 0s background
+
+str = ""
+for i in (1..3)
+    str += "\00a0\00a0\00a0"
+    [tab-{i}]:before
+        content str
+
+.navbar
+    background-color colors.secondary
+    color colors.main
+    padding 10px
+    font-size 125%
+
+    &-header
+        display inline-block
+        font-size 150%
+        vertical-align middle
+
+        a
+            color currentColor
+            text-decoration none
+    &-items
+        display inline-flex
+        margin 0
+        padding 0 0 0 15px
+        list-style none
+        vertical-align middle
+
+        li:not(:first-child)
+            padding-left 7.5px
+
+            a
+                color currentColor
+                text-decoration none
+
+.main
+    padding-top 10px
+
+    .postcode-search-container
+        text-align center
+    .postcode-search
+        width 50%
+    
+    .postcode
+        padding 15px 0
+
+        .postcode-name
+            text-align center
+            font-size 200%
+            font-weight bold
+        .postcode-table
+            border-collapse collapse
+            width 500px
+            margin auto
+
+            td, th
+                text-align left
+                padding 2.5px
+            th
+                background #eee
+                position sticky
+                top 0
+    .postcode-error
+        color red
+        font-weight bold
+        font-size 150%
+        padding 15px 0
+        text-align center
+.faq-main
+    width 600px
+    margin auto
+    padding 15px 0
+
+    .question-item
+        margin-bottom 7.5px
+
+        & > q
+            font-weight bold
+            display block
+
+            &:before
+                content "Q: "
+        & > a
+            &:before
+                content "A: "

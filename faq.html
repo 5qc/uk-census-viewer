@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" href="/favicon.svg" />
+
+        <title>FAQ | UK Census Viewer</title>
+
+        <link rel="stylesheet" href="/style.css" />
+        <script src="/script.js" defer></script>
+    </head>
+    <body>
+        <div class="navbar">
+            <div class="navbar-header">
+                <a href="/">UK Census Viewer</a>
+            </div>
+            <ul class="navbar-items">
+                <li>About</li>
+                <li><a href="/faq.html">FAQ</a></li>
+            </ul>
+        </div>
+
+        <div class="faq-main">
+            <div class="question-item">
+                <q>How did you get this data?</q>
+                <a>I found tons of United Kingdom 2011 Census tables, that's literally it.</a>
+            </div>
+            <div class="question-item">
+                <q>Why postcode sectors?</q>
+                <a>
+                    Because the UK settlement system is weird and split up their towns in like 25,000
+                    ways (and also the fact that there isn't census data for a lot of big places, and also
+                    also I tried to include parishes and all that but it's really hard because of the
+                    fact that English people aren't creative with their names and use the same one whenever
+                    they can).
+                </a>
+            </div>
+            <div class="question-item">
+                <q>Why did you make this?</q>
+                <a>
+                    I am fascinated by the United States Census Bureau's data viewer, and so I
+                    decided to make my own for the United Kingdom. Read more at the
+                    <a href="/about.html">About</a> section.
+                </a>
+            </div>
+            <div class="question-item">
+                <q>Can you provide me with some facts?</q>
+                <a>Sure. The most populous postcode sector is E12 6 (25,962) and the least populous is
+                    EC1V 2 (121). The largest postcode sector by area is NE48 1 (436.83 km<sup>2</sup>),
+                    and the smallest postcode sector by area is M60 7 (0.0034 km<sup>2</sup>). The
+                    postcode sector with the most males is E12 6 (13,906) and the one with the most
+                    females is HU7 4 (12,090). The postcode sector with the most households without
+                    cars is E14 9 (4,824) and the one with the least is BA1 9 (2). The most densely
+                    populated postcode selector is M60 7 (137,060 km<sup>2</sup>) and the least densely
+                    populated one is NE48 1 (1.749 km<sup>2</sup>)
+                </a>
+            </div>
+            <div class="question-item">
+                <q>Why are only England and Wales on here?</q>
+                <a>Because for whatever reason, postcode selector results only apply to England and Wales. I'll make a Scotland and Northern Ireland census viewer someday.</a>
+            </div>
+            <div class="question-item">
+                <q>Why is the data from 2011 rather than 2021?</q>
+                <a>Because the UK haven't released their 2021 census data yet. I'll be sure to update this site as soon as it comes out.</a>
+            </div>
+        </div>
+    </body>
+</html>

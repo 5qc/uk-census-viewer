@@ -1,0 +1,5 @@
+age-of-arrival          = https://www.nomisweb.co.uk/census/2011/qs802ew
+car-or-van-availability = https://www.nomisweb.co.uk/census/2011/ks404ew
+country-of-birth        = https://www.nomisweb.co.uk/census/2011/qs203ew
+ethnic-groups           = https://www.nomisweb.co.uk/census/2011/ks201ew
+usual-population        = https://www.nomisweb.co.uk/census/2011/ks101ew
